@@ -141,7 +141,7 @@ ORDER BY TotalTests DESC;
  --CREATE VIEW TABLE to store data for later visualizations
  
  CREATE VIEW Cleaned_Data AS
- SELECT D.continent, D.location, D.date, D.population,D.total_cases,D.total_deaths, V.new_tests, V.new_vaccinations, SUM(V.new_vaccinations) OVER (Partition by D.location ORDER BY D.location, D.date) as RollingPeopleVaccinated
+ SELECT D.continent, D.location, D.date, D.population, D.new_cases, D.total_cases, D.total_deaths, V.new_tests, V.new_vaccinations, V.total_vaccinations, SUM(V.new_vaccinations) OVER (Partition by D.location ORDER BY D.location, D.date) as RollingPeopleVaccinated
  FROM CovidDeaths as D
  JOIN CovidVaccinations as V ON D.location = V.location AND D.date = V.date
  WHERE D.continent IS NOT NULL

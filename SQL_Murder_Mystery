@@ -1,0 +1,33 @@
+Link the game : https://mystery.knightlab.com/
+-- Scenario
+There's been a Murder in SQL City! The SQL Murder Mystery is designed to be both a self-directed lesson to learn SQL concepts and commands and a fun game for experienced SQL users to solve an intriguing crime.
+
+-- Experienced SQL sleuths start here
+A crime has taken place and the detective needs your help. The detective gave you the crime scene report, but you somehow lost it. You vaguely remember that the crime was a ​murder​ that occurred sometime on ​Jan.15, 2018​ and that it took place in ​SQL City​. Start by retrieving the corresponding crime scene report from the police department’s database.
+
+-- Chanllenge find the murder with no more than 2 queries
+SELECT *
+FROM crime_scence_reprot
+
+SELECT p.id, p.name, d.plate_number
+FROM ((( interview as i JOIN person as p ON i.person_id = p.id )
+ JOIN get_fit_now_member as gym_member ON p.id = gym_member.person_id)
+ JOIN get_fit_now_check_in as gym_check ON gym_member.id = gym_check.membership_id)
+ JOIN drivers_license as d ON p.license_id = d.id
+WHERE p.name IN ('Carmen Dimick','Jeremy Bowers','Annabel Miller') OR d.plate_number LIKE '%H42W%'
+GROUP BY p.name
+-- Check your solution
+Did you find the killer?
+
+INSERT INTO solution VALUES (1, 'Jeremy Bowers');
+  SELECT value
+  FROM solution;
+
+-- Querying the interview transcript of the murderer to find the real villain behind this crime
+SELECT *
+FROM interview
+WHERE person_id ='67318'
+
+-- The murder said " I was hired by a woman with a lot of money. I don't know her name but I know she's around 5'5" (65") or 5'7" (67"). She has red hair and she drives a Tesla Model S. I know that she attended the SQL Symphony Concert 3 times in December 2017 "
+
+

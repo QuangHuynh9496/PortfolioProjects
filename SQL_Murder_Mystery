@@ -44,4 +44,23 @@ FROM interview
 WHERE person_id ='67318'
 
 -- The murder said " I was hired by a woman with a lot of money. I don't know her name but I know she's around 5'5" (65") or 5'7" (67"). She has red hair and she drives a Tesla Model S. I know that she attended the SQL Symphony Concert 3 times in December 2017 "
-END
+-- Follow info from the murder so we can find the real villain behide that crime
+
+SELECT person_id, COUNT (*)
+FROM facebook_event_checkin
+WHERE event_name ='SQL Symphony Concert' AND date LIKE '201712%'
+GROUP BY person_id
+HAVING COUNT(person_id) >= 3
+
+--Looking for Full Infomation of the real villain
+SELECT p.id, p.name
+FROM person as p
+	JOIN drivers_license as d ON p.license_id = d.id
+WHERE (p.id = '24556' or p.id = '99716') and (d.hair_color ='red' or d.gender ='female' or d.car_make ='Tesla' or d.car_model ='S')
+GROUP BY d.id
+
+SELECT *
+FROM person
+WHERE id = '99716'
+--Name of the Woman who hired the Murder is Miranda Priestly
+--DONE

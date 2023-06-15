@@ -11,9 +11,9 @@ FROM crime_scene_report
 WHERE date = '20180115' AND type ='murder' AND city ='SQL City'
 
 -- Investigate information from witnesses
-SELECT i.transcript, p.name, p.address_number, p.address_street_name
+SELECT i.transcript
 FROM interview as i JOIN person as p ON i.person_id = p.id
-WHERE p.address_street_name ='Northwestern Dr' OR  p.name LIKE 'Annabel' OR p.address_street_name = 'Franklin Ave'
+WHERE p.address_street_name ='Northwestern Dr' OR  (p.name LIKE 'Annabel' AND p.address_street_name = 'Franklin Ave')
 ORDER BY p.address_number DESC
 
 -- Continue to investigate from the information gathered
@@ -22,7 +22,7 @@ FROM ((( interview as i JOIN person as p ON i.person_id = p.id )
  JOIN get_fit_now_member as gym_member ON p.id = gym_member.person_id)
  JOIN get_fit_now_check_in as gym_check ON gym_member.id = gym_check.membership_id)
  JOIN drivers_license as d ON p.license_id = d.id
-WHERE (gym_member.membership_status ='gold' AND gym_member.id LIKE '48Z%') OR gym_check.check_in_date ='20180109' OR d.plate_number LIKE '%H42W%'
+WHERE (gym_member.membership_status ='gold' AND gym_member.id LIKE '48Z%') AND gym_check.check_in_date ='20180109' AND d.plate_number LIKE '%H42W%'
 GROUP BY gym_member.name  
 
 -- Check my solution
